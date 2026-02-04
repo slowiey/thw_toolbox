@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+/* BundesSans Web Font */
+@font-face {
+  font-family: 'BundesSans';
+  src: url('/fonts/BundesSansWeb-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BundesSans';
+  src: url('/fonts/BundesSansWeb-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BundesSans';
+  src: url('/fonts/BundesSansWeb-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BundesSans';
+  src: url('/fonts/BundesSansWeb-BoldItalic.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* THW Design System */
+@theme {
+  /* Colors */
+  --color-thw-blue: #003399;
+  --color-thw-blue-dark: #002266;
+  --color-thw-blue-light: #0044cc;
+  --color-thw-yellow: #FFFF00;
+  --color-thw-gray: #F2F2F2;
+  --color-thw-cyan: #0099FF;
+
+  /* Fonts - BundesSans with Arial fallback */
+  --font-sans: 'BundesSans', 'Arial', 'Helvetica', sans-serif;
+  --font-serif: 'Times New Roman', 'Georgia', serif;
+}
+
+/* Base styles */
+body {
+  font-family: var(--font-sans);
+  background-color: white;
+  color: #1a1a1a;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-thw-gray);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-thw-blue);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-thw-blue-dark);
+}
