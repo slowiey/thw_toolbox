@@ -29,11 +29,12 @@ const TEXT_LOGO_PERCENTAGE = 40 // Full logos at 40% of image width
 
 // Default settings for new images
 const DEFAULT_SETTINGS = {
-    logo: 'blue',
+    logo: 'gear-blue',
     position: 'top-right',
     photographer: '',
     showBottomBar: false,
-    bottomBarText: ''
+    bottomBarText: '',
+    ortsverbandText: '' // Text to display under gear logo
 }
 
 // Generate unique ID
@@ -205,6 +206,44 @@ export default function PhotoEditor() {
             ctx.shadowOffsetY = 2
             ctx.drawImage(logoObj, x, y, logoWidth, logoHeight)
             ctx.restore()
+
+            // Draw Ortsverband text under gear logo if text is provided
+            if (isGearLogo && settings.ortsverbandText?.trim()) {
+                const text = settings.ortsverbandText.trim()
+                // Font size relative to logo width
+                let fontSize = logoWidth * 0.15
+                const maxTextWidth = logoWidth * 1.5
+
+                ctx.save()
+                ctx.font = `bold ${fontSize}px BundesSans, Arial, sans-serif`
+
+                // Scale down if text is too wide
+                let textWidth = ctx.measureText(text).width
+                while (textWidth > maxTextWidth && fontSize > 10) {
+                    fontSize *= 0.9
+                    ctx.font = `bold ${fontSize}px BundesSans, Arial, sans-serif`
+                    textWidth = ctx.measureText(text).width
+                }
+
+                // Determine text color based on logo type
+                const isWhiteLogo = settings.logo.includes('white')
+                ctx.fillStyle = isWhiteLogo ? '#ffffff' : '#003399' // White for white logo, THW blue otherwise
+                ctx.textAlign = 'center'
+                ctx.textBaseline = 'top'
+
+                // Add shadow for visibility
+                ctx.shadowColor = isWhiteLogo ? 'rgba(0,0,0,0.5)' : 'rgba(255,255,255,0.5)'
+                ctx.shadowBlur = 3
+                ctx.shadowOffsetX = 0
+                ctx.shadowOffsetY = 1
+
+                // Position text centered under the logo
+                const textX = x + logoWidth / 2
+                const textY = y + logoHeight + (logoHeight * 0.05) // Small gap under logo
+
+                ctx.fillText(text, textX, textY)
+                ctx.restore()
+            }
         }
 
         // Draw photographer credit (Always on top)
@@ -508,6 +547,26 @@ export default function PhotoEditor() {
                             ))}
                         </div>
                     </div>
+
+                    {/* Ortsverband Text (only for gear logos) */}
+                    {currentSettings.logo.includes('gear') && (
+                        <div className="mb-4">
+                            <p className="text-xs text-gray-500 mb-2">Text unter Logo (z.B. Ortsverband)</p>
+                            <input
+                                type="text"
+                                value={currentSettings.ortsverbandText}
+                                onChange={(e) => {
+                                    if (selectedImage) {
+                                        updateSelectedImageSettings('ortsverbandText', e.target.value)
+                                    } else {
+                                        setGlobalSettings(s => ({ ...s, ortsverbandText: e.target.value }))
+                                    }
+                                }}
+                                placeholder="z.B. Ortsverband Wesel"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-thw-blue focus:border-thw-blue outline-none text-sm"
+                            />
+                        </div>
+                    )}
 
                     {/* Photographer Credit */}
                     <div className="mb-4">
