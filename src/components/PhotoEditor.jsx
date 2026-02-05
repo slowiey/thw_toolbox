@@ -233,7 +233,7 @@ export default function PhotoEditor() {
                 } else {
                     ctx.fillStyle = '#003399' // THW Blue
                 }
-                ctx.font = `bold ${ovFontSize}px BundesSans, Arial, sans-serif`
+                ctx.font = `bold ${ovFontSize}px 'D-DIN', 'DIN 1451', BundesSans, Arial, sans-serif`
                 ctx.textAlign = 'left'
                 ctx.textBaseline = 'top'
                 ctx.shadowColor = 'rgba(0,0,0,0.3)'
